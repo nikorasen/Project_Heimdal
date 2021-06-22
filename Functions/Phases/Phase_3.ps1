@@ -16,7 +16,7 @@ function init_Phase_3
     #rKill
     Write-Host "$head1 Job: rKill - Log $Timestamp $head2" 2>&1 >> $Global:rKill_log
     wget https://www.bleepingcomputer.com/download/rkill/dl/10/ -outfile M:\Toolbox\rkill\Vaccine.exe
-    & M:\Toolbox\rkill\Vaccine.exe 2>&1 >> $Global:rKill_log
+    & M:\Toolbox\rkill\Vaccine.exe 2>&1 >> $Global:rKill_log | Out-Null
     $Logcheck1 = Test-Path $env:USERPROFILE\Desktop\rkill.txt
     if ($Logcheck1 -eq 'True')
     {
@@ -35,7 +35,7 @@ function init_Phase_3
     }
     wget https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe -outfile M:\Toolbox\kvrt\kvrt.exe
     Copy-Item -path M:\Toolbox\kvrt\kvrt.exe -destination C:\EWT\KVRT.exe
-    & C:\EWT\kvrt.exe -accepteula -silent -adinsilent -processlevel 3 -dontencrypt -allvolumes -d "N:\EncArch\Archive\RAW_Logs\KVRT"
+    & C:\EWT\kvrt.exe -accepteula -silent -adinsilent -processlevel 3 -dontencrypt -allvolumes -d "N:\EncArch\Archive\RAW_Logs\KVRT" | out-null
     Get-Content N:\Archive\RAW_Logs\KVRT\kvrt_scan.log\Reports\details*.klr N:\EncArch\Archive\RAW_Logs\KVRT\kvrt_log.txt
     Get-Content N:\Archive\RAW_Logs\KVRT\kvrt_scan.log\Reports\report*.klr N:\EncArch\Archive\RAW_Logs\KVRT\kvrt_log.txt
     Remove-Item C:\EWT\kvrt.exe -Recurse -force 
@@ -45,7 +45,7 @@ function init_Phase_3
     Write-Host "$head1 Starting Job: SOPHOS at $Timestamp ... $head2" 2>&1 >> $Logfile
     Write-host "$head1 Job: Sophos - Log" 2>&1 >> $Global:Sophos_log
     wget https://secure2.sophos.com/en-us/products/free-tools/virus-removal-tool/free-download.aspx -outfile M:\Toolbox\SVRT\svrtcli.exe
-    & M:\Toolbox\SVRT\svrtcli.exe -yes -debug -uninstall 2>&1 >> $Global:Sophos_log
+    & M:\Toolbox\SVRT\svrtcli.exe -yes -debug -uninstall 2>&1 >> $Global:Sophos_log | Out-Null
     $LogCheck2 = Test-Path "$env:ProgramData\Sophos\Sophos Virus Removal Tool\Logs\SophosVirusRemovalTool.log"
     if ($LogCheck2 -eq 'True')
     {
@@ -57,15 +57,15 @@ function init_Phase_3
     #Emisoft
     Write-host "$head1 Starting Job: EMISOFT EMERGENCY KIT at $global:Timetamp ... $head2" 2>&1 >> $Logfile
     Write-Host "$head1 Job: Emisoft Emergency Kit - Log $global:Timestamp" 2>&1 >> $Global:Emisoft_log
-    & M:\Toolbox\EEK\a2cmd.exe /f="c:\" /update 2>&1 >> $Global:Emisoft_log
-    & M:\Toolbox\EEK\a2cmd.exe /f="c:\" /malware /rk /t /pup /a /ntfs /ac /d /log=$Global:Emisoft_log 2>&1 >> $Global:Emisoft_log
+    & M:\Toolbox\EEK\a2cmd.exe /f="c:\" /update 2>&1 >> $Global:Emisoft_log | Out-Null
+    & M:\Toolbox\EEK\a2cmd.exe /f="c:\" /malware /rk /t /pup /a /ntfs /ac /d /log=$Global:Emisoft_log 2>&1 >> $Global:Emisoft_log | Out-Null 
     Get-Content $Global:Emisoft_log 2>&1 >> $Logfile
     Write-Host "$head1 Job Emisoft Emergency Kit: COMPLETED at $Timestamp $head2" 2>&1 >> $Logfile
     #ClamAV
     Write-host "$head1 Starting Job: CLAMAV at $Timestamp ... $head2" 2>&1 >> $Logfile
     Write-Host "$head1 Job: Clam AV - Log $Timestamp $head2" 2>&1 >> $Global:Clam_log
-    & M:\Toolbox\ClamAV\freshclam.exe 2>&1 >> $Global:Clam_log
-    & M:\Toolbox\ClamAV\clamscan.exe --log=$Global:Clam_log --move=$global:BRIG --heuristic-alerts=yes --alert-encrypted=yes --recursive C:\ 2>&1 >> $Global:Clam_log
+    & M:\Toolbox\ClamAV\freshclam.exe 2>&1 >> $Global:Clam_log | Out-Null
+    & M:\Toolbox\ClamAV\clamscan.exe --log=$Global:Clam_log --move=$global:BRIG --heuristic-alerts=yes --alert-encrypted=yes --recursive C:\ 2>&1 >> $Global:Clam_log | Out-Null
     Get-Content $Global:Clam_log 2>&1 >> $Logfile
     Write-Host "$head1 Job ClamAV: COMPLETED at $Timestamp $head2" 2>&1 >> $Logfile
     # When I figure out how to download, install, & scan with MB via CLI then this section will be uncommented - NC 06/16/21
@@ -76,5 +76,6 @@ function init_Phase_3
 
     #Get-Content $Global:Mbam_log 2>&1 >> $Logfile
     #Write-Host "$head1 Job Malwarebytes COMPLETED at $Global:Timestamp" 2>&1 >> $Logfile
+    Write-host "$head1 Phase 3 COMPLETED on $global:DevID at $global:Timestamp `n" 2>&1 >> $Logfile
 }
 init_Phase_3
