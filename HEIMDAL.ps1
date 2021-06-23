@@ -12,6 +12,7 @@
 ###########################
 ###Initial Prep & Checks###
 ###########################
+Add-Type -AssemblyName PresentationCore,PresentationFramework
 $ErrorActionPreference = "SilentlyContinue"
 Set-ExecutionPolicy unrestricted
 $global:SCRIPT_VERSION = "3.0.0.1 'Vonnegut'"
