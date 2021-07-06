@@ -40,15 +40,15 @@ function init_Phase_0
     Get-Content N:\EncArch\Archive\{$global:DevID}_ChromeCookies_{$global:Timestamp}.txt 2>&1 >> $Logfile
     & M:\Toolbox\MZCV\mzcv.exe /stext N:\EncArch\Archive\{$global:DevID}_FirefoxCookies_{$global:Timestamp}.txt
     Get-Content N:\EncArch\Archive\{$global:DevID}_FirefoxCookies_{$global:Timestamp}.txt 2>&1 >> $Logfile
-    #Currently Opened Files
-    Write-Host "$Header `n $HalfHead Currently Opened files $Halfhead `n Device: $DevID `n Timestamp: $Timestamp `n "  2>&1 >> $Logfile
-    & M:\Toolbox\OpenedFilesView\OpenedFilesView.exe /stext N:\EncArch\Archive\{$global:DevID}_OpenedFiles_{$global:Timestamp}.txt /startashidden | Out-Null
-    Get-Content N:\EncArch\Archive\{$global:DevID}_OpenedFiles_{$global:Timestamp}.txt 2>&1 >> $Logfile
     # Browser Settings
     write-host "$Header `n $HalfHead Browser Settings Export $Halfhead `n Device: $DevID `n Timestamp: $Timestamp `n "  2>&1 >> $Logfile
     reg export "HKCU\Software\Microsoft\Internet Explorer" N:\EncArch\Reports\{$DevID}_IEsettings-user_{$Timestamp}_.txt
     reg export "HKLM\Software\Microsoft\Internet Explorer" N:\EncArch\Reports\{$DevID}_IEsettings-device_{$Timestamp}_.txt
     write-host "`n $header `n" 2>&1 >> $Logfile
+    #Currently Opened Files
+    Write-Host "$Header `n $HalfHead Currently Opened files $Halfhead `n Device: $DevID `n Timestamp: $Timestamp `n "  2>&1 >> $Logfile
+    & M:\Toolbox\OpenedFilesView\OpenedFilesView.exe /stext N:\EncArch\Archive\{$global:DevID}_OpenedFiles_{$global:Timestamp}.txt /startashidden | Out-Null
+    Get-Content N:\EncArch\Archive\{$global:DevID}_OpenedFiles_{$global:Timestamp}.txt 2>&1 >> $Logfile
     # User List
     Write-Host "$Header `n $Halfhead Enumerated User List Export $Halfhead `n Device: $DevID `n Timestamp: $Timestamp `n "  2>&1 >> $Logfile
     Get-LocalUser Select-Object * 2>&1 >> $Logfile

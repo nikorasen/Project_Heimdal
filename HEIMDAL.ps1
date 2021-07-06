@@ -16,7 +16,7 @@ Add-Type -AssemblyName PresentationCore,PresentationFramework
 $ErrorActionPreference = "SilentlyContinue"
 Set-ExecutionPolicy unrestricted
 $global:SCRIPT_VERSION = "3.0.0.1 'Vonnegut'"
-$global:SCRIPT_DATE = 2021-06-15
+$global:SCRIPT_DATE = 2021-07-06
 $global:LOGPATH = "N:\EncArch\Archive"
 $global:RAW_LOGPATH = "N:\EncArch\Archive\RAW_Logs"
 $global:RAW_LOG = "N:\EncArch\Archive\RAW_Logs\HEIMDAL_RAW.txt"
@@ -35,12 +35,6 @@ $global:Toolbox = "M:\Functions\Toolbox"
 $global:Mods = "M:\Functions\Modules"
 $global:DevID = hostname
 $global:LOGFILE = "N:\EncArch\Archive\{$global:DevID}_Heimdal_Log_{$global:Timestamp}.txt"
-$global:UninView = "M:\Functions\Toolbox\UninstallView.exe"
-$global:UnViArg01 = "/RunAsAdmin" 
-$global:UnViArg02 = "/ShowItemsWithoutUninstallScript"
-$global:UnViArg03 = 1
-$global:InstView = "M:\Functions\Toolbox\InstalledAppView.exe"
-$global:InstPkView = "M:\Functions\Toolbox\InstalledPackagesView.exe"
 Write-Host "... Initiating HEIMDAL v3.0.0.1 ... "
 Write-Host "HEIMDAL started at $global:Timestamp" 2>&1 >> $global:RAW_LOG
 #
@@ -48,7 +42,7 @@ function init1
 {
     $~d0 2>NUL 
     push-location "$~dp0" 2>NUL 
-    push-location resuorces 
+    push-location resources 
     Write-Host "HEIMDAL v3.0.0.1 'Vonnegut'" 
     Write-Host "HEIMDAL SEES ALL. HEIMDAL KNOWS ALL. HEIMDAL is the culmination of every virus's worst nightmare composed into one graceful gravity bomb" 
     Write-Host "HEIMDAL will now clone and collect detailed logs on the compromised system."

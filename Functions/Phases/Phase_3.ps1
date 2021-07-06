@@ -1,14 +1,14 @@
 ################## Phase 3: Disinfect ################## 
 $ErrorActionPreference = "SilentlyContinue"
-$Global:rKill_log = "$Global:RAW_LOGPATH\{$Global:DevID}-rKill_Log.txt"
-$Global:Kvrt_log = "$Global:RAW_LOGPATH\{$Global:DevID}-KVRT_Log.txt"
-$Global:Sophos_log = "$Global:RAW_LOGPATH\{$Global:DevID}-Sophos_log.txt"
-$Global:Emisoft_log = "$Global:RAW_LOGPATH\{$Global:DevID}-Emisoft_log.txt"
-$Global:Panda_log = "$Global:RAW_LOGPATH\{$Global:DevID}-Panda_log.txt"
-$Global:Clam_log = "$Global:RAW_LOGPATH\{$Global:DevID}-Clam_log.txt"
-$Global:Comodo_log = "$Global:RAW_LOGPATH\{$Global:DevID}-Comodo_log.txt"
-$Global:Mbam_log = "$Global:RAW_LOGPATH\{$Global:DevID}-Mbam_log"
-$Global:Adw_Cl_Log = "$Global:RAW_LOGPATH\{$Global:DevOD}-ADWCL_log.txt"
+$Global:rKill_log = "$Global:RAW_LOGPATH\rKill_Log.txt"
+$Global:Kvrt_log = "$Global:RAW_LOGPATH\KVRT_Log.txt"
+$Global:Sophos_log = "$Global:RAW_LOGPATH\Sophos_log.txt"
+$Global:Emisoft_log = "$Global:RAW_LOGPATH\Emisoft_log.txt"
+$Global:Panda_log = "$Global:RAW_LOGPATH\Panda_log.txt"
+$Global:Clam_log = "$Global:RAW_LOGPATH\Clam_log.txt"
+$Global:Comodo_log = "$Global:RAW_LOGPATH\Comodo_log.txt"
+$Global:Mbam_log = "$Global:RAW_LOGPATH\Mbam_log"
+$Global:Adw_Cl_Log = "$Global:RAW_LOGPATH\ADWCL_log.txt"
 $Logfile = $global:LOGFILE
 function init_Phase_3
 {

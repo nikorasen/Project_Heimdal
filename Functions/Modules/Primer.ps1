@@ -77,33 +77,33 @@ function init_LogHeader
 {
     $DevID = hostname
     $Tzone = (Get-Timezone).Id 
-    Write-host "$header `n" | & $Chop
-    Write-Host " HEIMDAL v. $Script_Version     Updated: $Script_Date `n" | & $Chop
-    Write-Host " Windows Build: $WinVer `n" | & $Chop
-    Write-Host " Executing as:      $Env:Username on $DevID `n" | & $Chop
-    Write-Host " Logfile:           $global:LOGPATH\$global:LOGFILE `n" | & $Chop
-    Write-Host " Timezone:          $Tzone `n" | & $Chop
-    Write-Host " Run Start Time:    $global:Start_Time `n" | & $Chop
+    Write-host "$header `n" | 2>&1 >> $Global:RAW_LOG
+    Write-Host " HEIMDAL v. $Script_Version     Updated: $Script_Date `n" | 2>&1 >> $Global:RAW_LOG
+    Write-Host " Windows Build: $WinVer `n" | 2>&1 >> $Global:RAW_LOG
+    Write-Host " Executing as:      $Env:Username on $DevID `n" | 2>&1 >> $Global:RAW_LOG
+    Write-Host " Logfile:           $global:LOGPATH\$global:LOGFILE `n" | 2>&1 >> $Global:RAW_LOG
+    Write-Host " Timezone:          $Tzone `n" | 2>&1 >> $Global:RAW_LOG
+    Write-Host " Run Start Time:    $global:Start_Time `n" | 2>&1 >> $Global:RAW_LOG
 }
-function Get-DiskSpace
+function Get_DiskSpace
 {
-    Write-Host "Disk Space before HEIMDAL Run: " | & $Chop
-    Get-CimInstance -Class CIM_LogicalDisk | Select-Object @{Name="Size(GB)";Expression={$_.size/1gb}}, @{Name="Free Space(GB)";Expression={$_.freespace/1gb}}, @{Name="Free (%)";Expression={"{0,6:P0}" -f(($_.freespace/1gb) / ($_.size/1gb))}}, DeviceID, DriveType | Where-Object DriveType -EQ '3' | & $Chop 
+    Write-Host "Disk Space before HEIMDAL Run: " | 2>&1 >> $Global:RAW_LOG
+    Get-CimInstance -Class CIM_LogicalDisk | Select-Object @{Name="Size(GB)";Expression={$_.size/1gb}}, @{Name="Free Space(GB)";Expression={$_.freespace/1gb}}, @{Name="Free (%)";Expression={"{0,6:P0}" -f(($_.freespace/1gb) / ($_.size/1gb))}}, DeviceID, DriveType | Where-Object DriveType -EQ '3' | 2>&1 >> $Global:RAW_LOG 
 }
 function InternalChecks
 {
     if ($Online -eq $False)
     {
-        write-host "No Network connection detected, skipping update checks." | & $Chop 
+        write-host "No Network connection detected, skipping update checks." | 2>&1 >> $Global:RAW_LOG 
     } elseif ($Online -eq $True)
     {
-        write-host "Checking for updates..." | & $Chop
+        write-host "Checking for updates..." | 2>&1 >> $Global:RAW_LOG
         Install-module PSWindowsUpdate -confirm:$False
         Import-Module PSWindowsUpdate 
         Get-WindowsUpdate -Microsoftupdate -AcceptAll -ForceDownload -ForceInstall
         Download-WindowsUpdate -MicrosoftUpdate -AcceptAll -ForceDownload -ForceInstall
         Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -ForceDownload -ForceInstall -IgnoreReboot -Confirm:$False
-        Write-Host "Update checks complete." | & $Chop
+        Write-Host "Update checks complete." | 2>&1 >> $Global:RAW_LOG
     }
 }
 function SetPath
@@ -124,7 +124,7 @@ Function Primer
     TestNet
     FinalPrep
     init_LogHeader
-    Get-DiskSpace
+    Get_DiskSpace
     InternalChecks
     SetPath
 }
