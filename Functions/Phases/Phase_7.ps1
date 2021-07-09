@@ -18,14 +18,18 @@ function MBSS
 }
 function MBAM
 {
-    $Prompt = [System.Windows.MessageBox]::Show('MalwareBytes scan COMPLETE. Please ensure MBAM window is visible on screen, then click CONTINUE to capture screenshot.','MBAM Complete','CONTINUE','Error')
+    $Prompt = [System.Windows.MessageBox]::Show('When Malwarebytes scan is COMPLETE, Please ensure MBAM window is visible on screen, then click CONTINUE to capture screenshot.','MBAM Complete','CONTINUE','Error')
     switch ($Prompt) {
         'CONTINUE' {
             MBSS
         }
     }
-    & M:\Toolbox\Mbam\mbam.exe | Out-Null
     $Prompt
+    & M:\Toolbox\Mbam\mbam.exe | Out-Null
+}
+function Kill_Mbam
+{
+    ."M:\Functions\Modules\MBAM_Deploy.ps1" -DeploymentType "Uninstall" -DeployMode "silent"
 }
 function IMSS
 {
@@ -35,14 +39,14 @@ function IMSS
 }
 function IMSCN
 {
-    $Prompt = [System.Windows.MessageBox]::Show('Immunet scan COMPLETE. Please ensure results window is visible on screen, then click CONTINUE to capture screenshot.','Immunet Complete','CONTINUE','Error')
+    $Prompt = [System.Windows.MessageBox]::Show('When Immunet scan is COMPLETE, Please ensure results window is visible on screen, then click CONTINUE to capture screenshot.','Immunet Complete','CONTINUE','Error')
     switch ($Prompt) {
         'CONTINUE' {
             IMSS
         }
     }
-    & M:\Toolbox\Immunet\immunetSetup.exe | Out-Null
     $Prompt
+    & M:\Toolbox\Immunet\immunetSetup.exe | Out-Null
 }
 function AHCSS
 {
@@ -52,14 +56,14 @@ function AHCSS
 }
 function HCSCN
 {
-    $Prompt = [System.Windows.MessageBox]::Show('Housecall scan COMPLETE. Please ensure results window is visible on screen, then click CONTINUE to capture screenshot.','Housecall Complete','CONTINUE','Error')
+    $Prompt = [System.Windows.MessageBox]::Show('When Housecall scan is COMPLETE, Please ensure results window is visible on screen, then click CONTINUE to capture screenshot.','Housecall Complete','CONTINUE','Error')
     switch ($Prompt) {
         'CONTINUE' {
             AHCSS
         }
     }
-    & M:\Toolbox\House\HousecallLauncher64.exe | Out-Null
     $Prompt
+    & M:\Toolbox\House\HousecallLauncher64.exe | Out-Null
 }
 function PANSS
 {
@@ -69,14 +73,14 @@ function PANSS
 }
 function PANSCN
 {
-    $Prompt = [System.Windows.MessageBox]::Show('Panda scan COMPLETE. Please ensure results window is visible on screen, then click CONTINUE to capture screenshot.','Panda Complete','CONTINUE','Error')
+    $Prompt = [System.Windows.MessageBox]::Show('When Panda scan is COMPLETE, Please ensure results window is visible on screen, then click CONTINUE to capture screenshot.','Panda Complete','CONTINUE','Error')
     switch ($Prompt) {
         'CONTINUE' {
             PANSS
         }
     }
-    & M:\Toolbox\Panda\PADNAFREEAV.exe | Out-Null
     $Prompt
+    & M:\Toolbox\Panda\PADNAFREEAV.exe | Out-Null
 }
 function BITSS
 {
@@ -86,14 +90,14 @@ function BITSS
 }
 function BITSCN
 {
-    $Prompt = [System.Windows.MessageBox]::Show('Bitdefender scan COMPLETE. Please ensure results window is visible on screen, then click CONTINUE to capture screenshot.','Bitdefender Complete','CONTINUE','Error')
+    $Prompt = [System.Windows.MessageBox]::Show('When Bitdefender scan is COMPLETE. Please ensure results window is visible on screen, then click CONTINUE to capture screenshot.','Bitdefender Complete','CONTINUE','Error')
     switch ($Prompt) {
         'CONTINUE' {
             BITSS
         }
     }
-    & M:\Toolbox\bitdefender_online.exe | Out-Null
     $Prompt
+    & M:\Toolbox\bitdefender_online.exe | Out-Null
 }
 function init_Phase_7
 {
