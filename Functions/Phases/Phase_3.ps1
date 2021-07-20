@@ -36,17 +36,22 @@ function init_Phase_3
     }
     wget https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe -outfile M:\Toolbox\kvrt\Dimitri.exe
     Copy-Item -path M:\Toolbox\kvrt\Dimitri.exe -destination C:\EWT\Dimitri.exe
-    & C:\EWT\Dimitri.exe -accepteula -silent -adinsilent -processlevel 3 -dontencrypt -allvolumes -d "N:\EncArch\Archive\RAW_Logs\KVRT" | out-null
+    & C:\EWT\Dimitri.exe -accepteula -silent -adinsilent -processlevel 3 -allvolumes -dontencrypt -d "N:\EncArch\Archive\RAW_Logs\KVRT" 
+    $KLRs = Get-Childitem -path N:\EncArch\Archive\RAW_Logs\KVRT -Include *.klr -Recurse 
+    Foreach ($klr in $KLRs)
+    {
+        Get-Childitem -path $klr | Get-Content $klr | Select-String -Pattern "Found=" | out-file -append N:\EncArch\Archive\RAW_Logs\KVRT\kvrt_log.txt
+    }
     Get-Content N:\Archive\RAW_Logs\KVRT\kvrt_scan.log\Reports\details*.klr N:\EncArch\Archive\RAW_Logs\KVRT\kvrt_log.txt
     Get-Content N:\Archive\RAW_Logs\KVRT\kvrt_scan.log\Reports\report*.klr N:\EncArch\Archive\RAW_Logs\KVRT\kvrt_log.txt
-    Remove-Item C:\EWT\kvrt.exe -Recurse -force 
+    Remove-Item C:\EWT\Dimitri.exe -Recurse -force 
     Get-Content $Global:Kvrt_log 2>&1 >> $Logfile
     Write-Host "$head1 Job KVRT: COMPLETED on $global:DevID at $global:Timestamp $head2" 2>&1 >> $Logfile
     #Sophos
     Write-Host "$head1 Starting Job: SOPHOS at $Timestamp ... $head2" 2>&1 >> $Logfile
     Write-host "$head1 Job: Sophos - Log" 2>&1 >> $Global:Sophos_log
     wget https://secure2.sophos.com/en-us/products/free-tools/virus-removal-tool/free-download.aspx -outfile M:\Toolbox\SVRT\svrtcli.exe
-    & M:\Toolbox\SVRT\Seraphim.exe-yes -debug -uninstall 2>&1 >> $Global:Sophos_log | Out-Null
+    & M:\Toolbox\SVRT\Seraphim.exe -yes -debug -uninstall 2>&1 >> $Global:Sophos_log | Out-Null
     $LogCheck2 = Test-Path "$env:ProgramData\Sophos\Sophos Virus Removal Tool\Logs\SophosVirusRemovalTool.log"
     if ($LogCheck2 -eq 'True')
     {

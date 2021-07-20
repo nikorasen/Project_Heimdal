@@ -34,7 +34,7 @@ $global:Users = Get-ChildItem C:\Users
 $global:Toolbox = "M:\Functions\Toolbox"
 $global:Mods = "M:\Functions\Modules"
 $global:DevID = hostname
-$global:LOGFILE = "N:\EncArch\Archive\{$global:DevID}_Heimdal_Log_{$global:Timestamp}.txt"
+$global:LOGFILE = "N:\EncArch\Archive\{$global:DevID}_Heimdal_Log.txt"
 Write-Host "... Initiating HEIMDAL v3.0.0.1 ... "
 Write-Host "HEIMDAL started at $global:Timestamp" 2>&1 >> $global:RAW_LOG
 #
