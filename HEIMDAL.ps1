@@ -64,6 +64,7 @@ function Flashpoint
     $Global:End_Time = Get-Date -Format o | ForEach-Object { $_ -replace ':', '.' } 
     ."M:\Functions\Phases\Phase_7.ps1"
     ."M:\Functions\Phases\Phase_8.ps1"
+    Write-Host "# # # # HEIMDAL COMPLETE # # # # `n PLEASE PROPERLY EJECT THE DRIVES `n BE SURE TO 'LOCK' DRIVES"
     # # # # HEIMDAL COMPLETE # # # # 
 }
 Flashpoint

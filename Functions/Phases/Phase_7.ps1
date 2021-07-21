@@ -1,5 +1,5 @@
 # # # # Phase 7: Manual Tools # # # #
-$global:Caps = "$global:logpath\ManAV_ScrCaps"
+$global:Caps = "$global:logpath\{$global:DevID}_ManAV_ScrCaps"
 Add-type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 $global:Scr = [System.Windows.Forms.SystemInformation]::VirtualScreen
