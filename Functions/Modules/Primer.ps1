@@ -55,6 +55,14 @@ function FS_Verify
         mkdir C:\EWT\HEIMDAL 
         write-host "C:\EWT\HEIMDAL created successfully."
     }
+    if (test-path "$global:logpath\Final_Report" -eq $true)
+    {
+        write-host "Final Archive Verified"
+    } elseif (Test-Path "$global:Logpath\Final_Report" -eq $False)
+    {
+        mkdir "$global:logpath\Final_Report"
+        write-host "Final Report archive created successfully"
+    }
     write-host "Archive successfully verified."
 }
 function TestNet 
@@ -117,6 +125,20 @@ function SetPath
     return $FINDSTR
     return $REG
 }
+function 7zip
+{
+    if (test-path "$env:ProgramFiles\7-Zip")
+    {
+        new-alias 7z "$env:ProgramFiles\7-zip\7z.exe"
+    } else
+    {
+        wget "https://www.7-zip.org/a/7z1900-x64.exe" -outfile "C:\EWT\7z1900-x64.exe"
+        msiexec.exe /i "C:\EWT\7z1900-x64.exe" /qn
+        start-sleep -s 120
+        rm -force "C:\EWT\7*"
+        new-alias 7z "$env:ProgramFiles\7-zip\7z.exe"
+    }
+}
 Function Primer
 {
     PrivCheck
@@ -127,5 +149,6 @@ Function Primer
     Get_DiskSpace
     InternalChecks
     SetPath
+    7zip
 }
 Primer
