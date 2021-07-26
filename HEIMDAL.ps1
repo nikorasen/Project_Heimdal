@@ -14,9 +14,9 @@
 ###########################
 Add-Type -AssemblyName PresentationCore,PresentationFramework
 $ErrorActionPreference = "SilentlyContinue"
-Set-ExecutionPolicy unrestricted
+Set-ExecutionPolicy remotesigned
 $global:SCRIPT_VERSION = "3.0.0.1 'Vonnegut'"
-$global:SCRIPT_DATE = 2021-07-06
+$global:SCRIPT_DATE = 2021-07-26
 $global:LOGPATH = "N:\EncArch\Archive"
 $global:RAW_LOGPATH = "N:\EncArch\Archive\RAW_Logs"
 $global:RAW_LOG = "N:\EncArch\Archive\RAW_Logs\HEIMDAL_RAW.txt"
@@ -49,7 +49,6 @@ function init1
 }
 function Flashpoint
 {
-    $Global:Start_Time = Get-Date -Format o | ForEach-Object { $_ -replace ':', '.'}
     ."M:\Functions\Modules\Primer.ps1"
     init1
     SetPath 
@@ -61,7 +60,6 @@ function Flashpoint
     ."M:\Functions\Phases\Phase_4.ps1"
     ."M:\Functions\Phases\Phase_5.ps1"
     ."M:\Functions\Phases\Phase_6.ps1"
-    $Global:End_Time = Get-Date -Format o | ForEach-Object { $_ -replace ':', '.' } 
     ."M:\Functions\Phases\Phase_7.ps1"
     ."M:\Functions\Phases\Phase_8.ps1"
     Write-Host "# # # # HEIMDAL COMPLETE # # # # `n PLEASE PROPERLY EJECT THE DRIVES `n BE SURE TO 'LOCK' DRIVES"

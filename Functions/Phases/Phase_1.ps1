@@ -62,18 +62,18 @@ function init_Phase_1
     Pop-Location
     #Ccleaner
     write-host "`n $halfhead Launching job CCleaner ... $halfhead `n $global:DevID $header `n $global:Timestamp `n" 2>&1 >> $Logfile
-    & M:\Toolbox\ccleaner\CCleaner.exe /auto 2>&1 >> $Logfile | Out-Null
+    & M:\Toolbox\CCleaner.exe /auto 2>&1 >> $Logfile | Out-Null
     write-host "`n $halfhead CCleaner Complete $halfhead `n $header `n " 2>&1 >> $Logfile
     #Find Duplicate Files
     write-host "`n $header `n $halfhead Launching job FindDupe ... $halfhead `n $global:DevID $header `n $global:Timestamp `n" 2>&1 >> $Logfile
     foreach ($User in $Users)
     {
-        start-process -filepath $Toolbox\finddupe\finddupe.exe -z -p -del "$env:USERPROFILE\Downloads\**" -wait 2>&1 >> $Logfile
+        start-process -filepath $Toolbox\finddupe.exe -z -p -del "$env:USERPROFILE\Downloads\**" -wait 2>&1 >> $Logfile
     }
     write-Host "`n $Halfhead FindDupe Complete $halfhead `n $global:DevID $header `n $global:Timestamp `n" 2>&1 >> $Logfile
     #Cleanup USB Drives
     write-host "$Halfhead Launching job USB Device Cleanup at $global:Timestamp ... $Halfhead `n " 2>&1 >> $Logfile
-    & M:\Toolbox\usb_cleanup\DriveCleanup.exe -n 2>&1 >> $Logfile
+    & M:\Toolbox\DriveCleanup.exe -n 2>&1 >> $Logfile
     Write-host "`n $header `n $halfhead USB Cleanup Complete $halfhead `n $global:DevID $header `n $global:Timestamp `n" 2>&1 >> $Logfile
     #Clear Windows Update Cache
     Write-Host "$Header `n $Halfhead Stopping Windows Update Service, clearing Update Cache ... $halfhead `n $global:DevID $header `n $global:Timestamp `n" 2>&1 >> $Logfile

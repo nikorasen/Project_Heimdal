@@ -22,13 +22,13 @@ function FS_Verify
 {
     #Import-Module .\Functions\Modules\Blops.psm1 -Force
     #Get-ChildItem N:\EncArch | Disable-FileEncryption
-    if (Test-Path N:\EncArch\Logs\HEIMDAL_Logs -eq $True)
+    if (Test-Path N:\EncArch\Archive -eq $True)
     {
-        Write-Host "N:\EncArch\Logs\HEIMDAL_Logs verified."
-    } elseif (Test-Path N:\EncArch\Logs\HEIMDAL_Logs -eq $False)
+        Write-Host "N:\EncArch\Archive verified."
+    } elseif (Test-Path N:\EncArch\Archive -eq $False)
     {
-        mkdir N:\EncArch\Logs\HEIMDAL_Logs
-        write-host "N:\EncArch\Logs\HEIMDAL_Logs created successfully."
+        mkdir N:\EncArch\Archive
+        write-host "N:\EncArch\Archive created successfully."
     }
     if (Test-Path N:\EncArch\Alcatraz -eq $True)
     {
@@ -62,6 +62,14 @@ function FS_Verify
     {
         mkdir "$global:logpath\Final_Report"
         write-host "Final Report archive created successfully"
+    }
+    if (test-path "M:\Toolbox" -eq $true)
+    {
+        write-host "Toolbox Verified."
+    } elseif (test-path "M:\Toolbox" -eq $false)
+    {
+        mkdir "M:\Toolbox"
+        write-host "Toolbox created successfully."
     }
     write-host "Archive successfully verified."
 }
@@ -125,7 +133,7 @@ function SetPath
     return $FINDSTR
     return $REG
 }
-function 7zip
+function init_7zip
 {
     if (test-path "$env:ProgramFiles\7-Zip")
     {
@@ -139,6 +147,54 @@ function 7zip
         new-alias 7z "$env:ProgramFiles\7-zip\7z.exe"
     }
 }
+function Hardware_Store
+{
+    $global:Toolbox = "M:\Toolbox"
+    $Tools = $global:Toolbox
+    wget https://www.nirsoft.net/utils/cports-x64.zip -outfile "$Tools\cports.zip"
+    wget https://www.nirsoft.net/utils/networktrafficview-x64.zip -outfile "$Tools\NetTraffView.zip"
+    wget https://www.nirsoft.net/utils/browserdownloadsview-x64.zip -outfile "$tools\BroDownView.zip"
+    wget https://www.nirsoft.net/utils/browsinghistoryview-x64.zip -outfile "$Tools\BroHisView.zip"
+    wget https://www.nirsoft.net/utils/chromecookiesview.zip -outfile "$Tools\ChromeCooks.zip"
+    wget https://www.nirsoft.net/utils/edgecookiesview.zip -outfile "$Tools\EdgeCooks.zip"
+    wget https://www.nirsoft.net/utils/mzcv-x64.zip -outfile "$Tools\FoxCooks.zip"
+    wget https://www.nirsoft.net/utils/ofview-x64.zip -outfile "$Tools\OFView.zip"
+    wget https://www.nirsoft.net/utils/appnetworkcounter-x64.zip -outfile "$Tools\AppNetCount.zip"
+    wget https://www.nirsoft.net/utils/networkusageview-x64.zip -outfile "$Tools\NetUseView.zip"
+    wget https://www.nirsoft.net/utils/uninstallview-x64.zip -outfile "$Tools\UninView.zip"
+    wget https://www.nirsoft.net/utils/installedappview-x64.zip -outfile "$Tools\InstAppView.zip"
+    wget https://www.nirsoft.net/utils/installedpackagesview-x64.zip -outfile "$Tools\InstPckView.zip"
+    wget https://www.nirsoft.net/utils/executedprogramslist.zip -outfile "$Tools\ExeProList.zip"
+    wget https://www.nirsoft.net/utils/winlogonview.zip -outfile "$Tools\WinLogView.zip"
+    wget https://www.bleepingcomputer.com/download/rkill/dl/10/ -outfile "$Tools\Vaccine.exe"
+    wget https://devbuilds.s.kaspersky-labs.com/devbuilds/KVRT/latest/full/KVRT.exe -outfile "$Tools\Dimitri.exe"
+    wget https://download.comodo.com/cce/download/setups/cce_public_x64.zip -outfile "$Tools\Dragon.zip"
+    wget https://downloads.malwarebytes.com/file/adwcleaner -outfile "$Tools\Baptism.exe"
+    wget https://www.malwarebytes.com/mwb-download/thankyou/ -outfile "$Tools\ManualAV\Mbam.exe"
+    wget https://download.immunet.com/binaries/immunet/bin/ImmunetSetup.exe -outfile "$Tools\ManualAV\ImmunetSetup.exe"
+    wget https://www.ccleaner.com/ccleaner/download/standard -outfile "$Tools\ccleaner.exe"
+    wget https://www.sentex.ca/~mwandel/finddupe/finddupe.exe -outfile "$Tools\finddupe.exe"
+    wget https://www.portablefreeware.com/download.php?dd64=1543 -outfile "$Tools\DriveCleanup.zip"
+    7z e "$Tools\cports.zip" -oM:\Toolbox
+    7z e "$Tools\NetTraffView.zip" -oM:\Toolbox
+    7z e "$Tools\BroDownView.zip" -oM:\Toolbox
+    7z e "$Tools\BroHisView.zip" -oM:\Toolbox
+    7z e "$Tools\ChromeCooks.zip" -oM:\Toolbox
+    7z e "$Tools\Edgecooks.zip" -oM:\Toolbox
+    7z e "$Tools\FoxCooks.zip" -oM:\Toolbox
+    7z e "$Tools\OFView.zip" -oM:\Toolbox
+    7z e "$Tools\AppNetCount.zip" -oM:\Toolbox
+    7z e "$Tools\NetUseView.zip" -oM:\Toolbox
+    7z e "$tools\UninView.zip" -oM:\Toolbox
+    7z e "$Tools\InstAppView.zip" -oM:\Toolbox
+    7z e "$Tools\InstPckView.zip" -oM:\Toolbox
+    7z e "$Tools\ExeProList.zip" -oM:\Toolbox
+    7z e "$Tools\Winlogonview.zip" -oM:\Toolbox
+    7z e "$Tools\Dragon.zip" -oM:\Toolbox\Dragon
+    7z e "$Tools\DriveCleanup.zip" -oM:\Toolbox
+    Rename-Item -path "$tools\Dragon\CCE.exe" -NewName "Dragon.exe"
+
+}
 Function Primer
 {
     PrivCheck
@@ -149,6 +205,7 @@ Function Primer
     Get_DiskSpace
     InternalChecks
     SetPath
-    7zip
+    init_7zip
+    Hardware_Store
 }
 Primer
