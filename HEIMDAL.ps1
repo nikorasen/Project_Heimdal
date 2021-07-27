@@ -14,7 +14,7 @@
 ###########################
 Add-Type -AssemblyName PresentationCore,PresentationFramework
 $ErrorActionPreference = "SilentlyContinue"
-Set-ExecutionPolicy remotesigned
+Set-ExecutionPolicy remotesigned -force
 $global:SCRIPT_VERSION = "3.0.0.1 'Vonnegut'"
 $global:SCRIPT_DATE = 2021-07-26
 $global:LOGPATH = "N:\EncArch\Archive"
@@ -29,12 +29,13 @@ $global:HalfHead = "================================="
 $global:Head1 = "`n $Header `n $halfhead" 
 $global:Head2 = "$halfhead `n $header `n"
 #$Chop = Out-file -Filepath $LOGFILE -Append
-$global:Timestamp = Get-Date -Format o | ForEach-Object { $_ -replace ':', '.' } 
+$global:Time = Get-Date
+$global:Timestamp = $time.tostring("u")
 $global:Users = Get-ChildItem C:\Users
 $global:Toolbox = "M:\Functions\Toolbox"
 $global:Mods = "M:\Functions\Modules"
 $global:DevID = hostname
-$global:LOGFILE = "N:\EncArch\Archive\{$global:DevID}_Heimdal_Log.txt"
+$global:LOGFILE = "N:\EncArch\Archive\$global:DevID-Heimdal_Log.txt"
 Write-Host "... Initiating HEIMDAL v3.0.0.1 ... "
 Write-Host "HEIMDAL started at $global:Timestamp" 2>&1 >> $global:RAW_LOG
 #

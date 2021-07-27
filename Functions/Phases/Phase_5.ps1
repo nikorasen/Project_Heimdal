@@ -10,7 +10,9 @@ Function init_Phase_5
     Write-Host "$head1 Windows Defender update complete $head2" 2>&1 >> $Logfile
     Write-host "$head1 Windows Defender Update Complete. $head2" 2>&1 >> $Logfile
     # # # # Windows Updates # # # # 
-    Install-module -Name PSWindowsUpdate -confirm:$false
+    [Net.ServicePointManager]::SecurityProtocol = [NetSecurityProtocolType]::Tls12
+    Install-PackageProvider -name "NuGet" -RequiredVersion 2.8.5.201 -force -confirm:$false
+    Install-module -Name PSWindowsUpdate -force -confirm:$false
     Import-Module -name PSWindowsUpdate 
     Get-WindowsUpdate -MicrosoftUpdate -ForceDownload -ForceInstall -AcceptAll -Confirm:$False 2>&1 >> $Logfile
     Download-WindowsUpdate -MicrosoftUpdate -ForceDownload -ForceInstall -AcceptAll -Confirm:$False 2>&1 >> $Logfile

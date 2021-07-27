@@ -6,6 +6,7 @@ $Timestamp = Get-Date -Format o | ForEach-Object { $_ -replace ':', '.' }
 $Start = $Date.adddays(-7)
 $Header = "==============================================================================================="
 $HalfHead = "================================="
+$NatLogs = "N:\EncArch\Archive\RAW_Logs\$DevID-Native_Windows_Logs.txt"
 $ErrorActionPreference = "SilentlyContinue"
 function Bunyun
 {
@@ -13,9 +14,9 @@ function Bunyun
     $SysEvLog = get-eventlog -ComputerName $DevID -log System -After $Start -EntryType Error, Warning
     $AppEvLog = get-eventlog -ComputerName $DevID -Log Application -After $Start -EntryType Error, Warning
     $SecEvLog = get-eventlog -ComputerName $DevID -Log Security -After $Start -EntryType Error, Warning
-    Set-Content -Path $LOGFILE -Value "$Header `n $HalfHead NATIVE WINDOWS LOGS $HalfHead `n Device: $DevID `n Date: $Date `n Time: $Timestamp `n $Header `n"
-    $SysEvLog 2>&1 >> N:\EncArch\Archive\RAW_Logs\Phase_0.log\Phase_0.txt
-    $AppEvLog 2>&1 >> N:\EncArch\Archive\RAW_Logs\Phase_0.log\Phase_0.txt
-    $SecEvLog 2>&1 >> N:\EncArch\Archive\RAW_Logs\Phase_0.log\Phase_0.txt
+    Set-Content -Path $NatLogs -Value "$Header `n $HalfHead NATIVE WINDOWS LOGS $HalfHead `n Device: $DevID `n Date: $Date `n Time: $Timestamp `n $Header `n"
+    $SysEvLog 2>&1 >> $NatLogs
+    $AppEvLog 2>&1 >> $NatLogs
+    $SecEvLog 2>&1 >> $NatLogs
 }
 Bunyun

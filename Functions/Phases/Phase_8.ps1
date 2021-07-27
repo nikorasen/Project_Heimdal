@@ -3,8 +3,8 @@ function init_Phase_8
 {
     if (test-path HKLM:SOFTWARE\Classes\Word.Application)
     {
-        $Arch01 = "$global:Logpath\Final_Report\{$global:DevID}_Final_Report.tar"
-        $Arch02 = "$global:Logpath\Final_Report\{$global:DevID}_Final_Report.tar.gz"
+        $Arch01 = "$global:Logpath\Final_Report\$global:DevID-Final_Report.tar"
+        $Arch02 = "$global:Logpath\Final_Report\$global:DevID-Final_Report.tar.gz"
         $word = New-object -ComObject "Word.Application"
         $doc = $word.documents.add()
         $selection=$word.Selection
@@ -66,7 +66,7 @@ function init_Phase_8
             $selection.TypeParagraph()
         }
         Add-Type -AssemblyName "Microsoft.Office.Interop.Word"
-        $Outpath = "$global:Logpath\Final_Report\{$global:DevID}_Final_Report.pdf"
+        $Outpath = "$global:Logpath\Final_Report\$global:DevID-Final_Report.pdf"
         $doc.SaveAs([ref]$outpath, [ref] [Microsoft.Office.Interop.Word.WdSaveFormat]::wdFormatPDF)
         $doc.close([Microsoft.Office.Interop.Word.WdSaveOptions]::wdDoNotSaveChanges)
         $word.Quit()
@@ -78,7 +78,7 @@ function init_Phase_8
         Set-ItemProperty -Path "N:\EncArch\Archive\Final_Report\Arch02.txt" -name IsReadOnly -value $True
     }else 
     {
-        $Final = "$global:Logpath\Final_Report\{$global:DevID}_Final_Report.txt"
+        $Final = "$global:Logpath\Final_Report\$global:DevID-Final_Report.txt"
         $rkill = get-content $Global:rKill_log 2>&1 >> $Final  
         $kvrt = get-content $Global:Kvrt_log 2>&1 >> $Final  
         $Sophos = get-content $Global:Sophos_log 2>&1 >> $Final  
@@ -90,8 +90,8 @@ function init_Phase_8
         $RAW = Get-Content $global:RAW_LOG 2>&1 >> $Final 
         $Findings = Get-Childitem -path N:\EncArch -Include *.txt, *.log -Recurse 
         $Found = Foreach ($Find in $Findings) {Get-Childitem -path $Find | Get-Content $Find | Select-String -Pattern "Found" | Out-File -Append $Final}
-        $Arch01 = "$global:Logpath\Final_Report\{$global:DevID}_Final_Report.tar"
-        $Arch02 = "$global:Logpath\Final_Report\{$global:DevID}_Final_Report.tar.gz"
+        $Arch01 = "$global:Logpath\Final_Report\$global:DevID-Final_Report.tar"
+        $Arch02 = "$global:Logpath\Final_Report\$global:DevID-Final_Report.tar.gz"
         Write-Host "Project Heimdal Report: `n Device: $global:DevID `n Timestamp: $global:End_Time `n" > $Final
         Write-Host "Antivirus Report `n Found:" 2>&1 >> $Final
         $Found

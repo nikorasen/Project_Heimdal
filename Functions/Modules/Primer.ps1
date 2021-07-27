@@ -73,17 +73,18 @@ function FS_Verify
     }
     write-host "Archive successfully verified."
 }
-function TestNet 
-{
-    $global:Online = (Test-NetConnection).PingSucceeded
-    return $global:Online
-}
+#function TestNet 
+#{
+#    $global:Online = (Test-NetConnection).PingSucceeded
+#    return $global:Online
+#}
 function FinalPrep 
 {
     push-location "$env:USERPROFILE\.."
     $global:ALLPROFILES = %CD%
     pop-location
-    $global:Timestamp = (Get-Date -Format o | ForEach-Object { $_ -replace ':', '.' } )
+    $Time = Get-Date
+    $Timestamp = $Time.ToString("u")
     $global:WinVer = (Get-WmiObject -class Win32_OperatingSystem).Caption
     return $ALLPROFILES
     return $Timestamp
@@ -106,22 +107,22 @@ function Get_DiskSpace
     Write-Host "Disk Space before HEIMDAL Run: " | 2>&1 >> $Global:RAW_LOG
     Get-CimInstance -Class CIM_LogicalDisk | Select-Object @{Name="Size(GB)";Expression={$_.size/1gb}}, @{Name="Free Space(GB)";Expression={$_.freespace/1gb}}, @{Name="Free (%)";Expression={"{0,6:P0}" -f(($_.freespace/1gb) / ($_.size/1gb))}}, DeviceID, DriveType | Where-Object DriveType -EQ '3' | 2>&1 >> $Global:RAW_LOG 
 }
-function InternalChecks
-{
-    if ($Online -eq $False)
-    {
-        write-host "No Network connection detected, skipping update checks." | 2>&1 >> $Global:RAW_LOG 
-    } elseif ($Online -eq $True)
-    {
-        write-host "Checking for updates..." | 2>&1 >> $Global:RAW_LOG
-        Install-module PSWindowsUpdate -confirm:$False
-        Import-Module PSWindowsUpdate 
-        Get-WindowsUpdate -Microsoftupdate -AcceptAll -ForceDownload -ForceInstall
-        Download-WindowsUpdate -MicrosoftUpdate -AcceptAll -ForceDownload -ForceInstall
-        Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -ForceDownload -ForceInstall -IgnoreReboot -Confirm:$False
-        Write-Host "Update checks complete." | 2>&1 >> $Global:RAW_LOG
-    }
-}
+#function InternalChecks
+#{
+#    if ($Online -eq $False)
+#    {
+#        write-host "No Network connection detected, skipping update checks." | 2>&1 >> $Global:RAW_LOG 
+#    } elseif ($Online -eq $True)
+#    {
+#        write-host "Checking for updates..." | 2>&1 >> $Global:RAW_LOG
+#        Install-module PSWindowsUpdate -confirm:$False
+#        Import-Module PSWindowsUpdate 
+#        Get-WindowsUpdate -Microsoftupdate -AcceptAll -ForceDownload -ForceInstall
+#        Download-WindowsUpdate -MicrosoftUpdate -AcceptAll -ForceDownload -ForceInstall
+#        Install-WindowsUpdate -MicrosoftUpdate -AcceptAll -ForceDownload -ForceInstall -IgnoreReboot -Confirm:$False
+#        Write-Host "Update checks complete." | 2>&1 >> $Global:RAW_LOG
+#    }
+#}
 function SetPath
 {
     $global:WMIC = "C:\Windows\System32\wbem\wmic.exe"
@@ -199,11 +200,11 @@ Function Primer
 {
     PrivCheck
     FS_Verify
-    TestNet
+    #TestNet
     FinalPrep
     init_LogHeader
     Get_DiskSpace
-    InternalChecks
+    #InternalChecks
     SetPath
     init_7zip
     Hardware_Store
